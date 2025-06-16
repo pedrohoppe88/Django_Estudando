@@ -1,1 +1,1 @@
-QUEM LEU ISSO É GAY
+GG
