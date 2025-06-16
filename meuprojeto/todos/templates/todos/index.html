@@ -6,6 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>teste ola django</h1>
+    <h1>teste ola dwdwjango</h1>
+    <ul>
+        {% for todo in todos %}
+            <li>{{ todo.title }} - {{ todo.description }}</li>
+        {% endfor %}
 </body>
-</html>
+</html> 
