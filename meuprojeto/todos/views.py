@@ -1,27 +1,19 @@
-from django.shortcuts import render
-from .models import Todo
+from django.shortcuts import render, redirect
 from .models import Usuarios
 
 def home(request):
-    Todos = Todo.objects.all()  # Obtém todas as tarefas do banco de dados
-    return render(request, 'todos/index.html', {"todos": Todos})  # Renderiza o template com as tarefas
+    return render(request, 'todos/index.html')
 
 def usuarios(request):
-    #salvar os dados da tela para o banco de dados
-    novoUsuario = Usuarios()
-    request.method = 'POST'
-    novoUsuario = request.POST.get('email')
-    novoUsuario = request.POST.get('password')
-    
-    # exibir os user já cadastrados em uma tela
-    
-    usuarios = {
-        'usuarios': Usuarios.objects.all()  # Obtém todos os usuários do banco de dados 
-        
+    if request.method == 'POST':
+        nome = request.POST.get('email')
+        email = request.POST.get('password')
+        if nome and email:
+            novoUsuario = Usuarios(nome=nome, email=email)
+            novoUsuario.save()
+            return redirect('usuarios')  # Redireciona para evitar reenvio do formulário
+
+    contexto = {
+        'usuarios': Usuarios.objects.all()
     }
-    #retornar os dados para a página HTML
-    return render(request, 'todos/usuarios.html', usuarios)
-    
-    
-    #nome = request.POST.get('email')
-    #email = request.POST.get('password')
+    return render(request, 'todos/usuarios.html', contexto)
